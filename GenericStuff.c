@@ -30,7 +30,8 @@ int main(int argc, char *argv[]) {
 
     for(int i = 0; i < colunas; i ++){
         for(int j = 0; j < linhas; j++){
-            printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+            imagem[i][j] = fgetc(entrada);
+            fgetc(entrada);
         }
     }
 
