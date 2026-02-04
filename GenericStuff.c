@@ -1,6 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+typedef struct {
+    int valor;
+    int visitado;
+} Pixel;
+
 int main(int argc, char *argv[]) {
     if( argc != 2){
         printf("Número de argumentos inválidos");
@@ -20,6 +25,7 @@ int main(int argc, char *argv[]) {
     char ignorado[3];
     fscanf(entrada, "%2s", ignorado);
 
+    //Lendo dimensões da imagem
     if(fscanf(entrada, "%d %d", &colunas, &linhas) == 2){
         colunas += 2;
         linhas += 2;
@@ -29,15 +35,19 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
-    int imagem[linhas][colunas];
+    //Cria o array da imagem no c com flag de visitado e padding
+    Pixel imagem[linhas][colunas];
 
     for(int i = 0; i < linhas; i ++){
         for(int j = 0; j < colunas; j++){
             if(i == 0 || j == 0 || i == linhas - 1 || j == colunas - 1){
-                imagem[i][j] = 0;
-            } else if(fscanf(entrada, "%d", &imagem[i][j]) != 1) {
-               printf("Pixel não lido corretamente \n");
-               return 1;
+                imagem[i][j].valor = 0;
+                imagem[i][j].visitado = 0;
+
+            } else if(fscanf(entrada, "%d", &imagem[i][j].valor) == 1) {
+               imagem[i][j].visitado = 0;
+            } else{
+                printf("Pixel não lido corretamente");
             }
         }
     }
