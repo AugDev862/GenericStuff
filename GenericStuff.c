@@ -20,9 +20,18 @@ int main(int argc, char *argv[]) {
     fscanf(entrada, "%*[^\\n]\\n");
 
     if(fscanf(entrada, "%d %d", &colunas, &linhas) == 2){
-        prtinf("A imagem possui %d colunas e %d linhas", linhas, colunas);
+        prtinf("A imagem possui %d colunas e %d linhas\n", linhas, colunas);
     } else {
         printf("Erro ao ler as dimensões da imagem");
+        return 1;
+    }
+
+    int imagem[colunas][linhas];
+
+    for(int i = 0; i < colunas; i ++){
+        for(int j = 0; j < linhas; j++){
+            printf("AAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        }
     }
 
 
