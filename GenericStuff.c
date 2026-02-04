@@ -16,26 +16,39 @@ int main(int argc, char *argv[]) {
 
     int colunas, linhas;
 
-    //ignora a primeira linha
-    fscanf(entrada, "%*[^\\n]\\n");
+    //lendo P1
+    char ignorado[3];
+    fscanf(entrada, "%2s", ignorado);
 
     if(fscanf(entrada, "%d %d", &colunas, &linhas) == 2){
-        prtinf("A imagem possui %d colunas e %d linhas\n", linhas, colunas);
+        colunas += 2;
+        linhas += 2;
+        printf("A imagem possui %d colunas e %d linhas(com padding)\n", colunas, linhas);
     } else {
-        printf("Erro ao ler as dimensões da imagem");
+        printf("Erro ao ler as dimensões da imagem!\n");
         return 1;
     }
 
-    int imagem[colunas][linhas];
+    int imagem[linhas][colunas];
 
-    for(int i = 0; i < colunas; i ++){
-        for(int j = 0; j < linhas; j++){
-            imagem[i][j] = fgetc(entrada);
-            fgetc(entrada);
+    for(int i = 0; i < linhas; i ++){
+        for(int j = 0; j < colunas; j++){
+            if(i == 0 || j == 0 || i == linhas - 1 || j == colunas - 1){
+                imagem[i][j] = 0;
+            } else if(fscanf(entrada, "%d", &imagem[i][j]) != 1) {
+               printf("Pixel não lido corretamente \n");
+               return 1;
+            }
         }
     }
 
+    for(int q  = 0; q < linhas; q ++){
+        for(int k = 0; k < colunas; k ++){
+            printf("%d ", imagem[q][k]);
+        }
+        printf("\n");
+    }
 
-
+    fclose(entrada);
     return 0;
 }
