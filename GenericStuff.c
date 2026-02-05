@@ -34,8 +34,10 @@ int pilha_vazia(Pilha *p){
     return p->topo == 0;
 }
 
-void rotular_objeto(int linhas, int colunas, Pixel imagem[linhas][colunas], int i, int j, int rotulo){
-    int vizinhaca_8[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+ int vizinhaca_8[8][2] = {{-1, -1}, {-1, 0}, {-1, 1}, {0, -1}, {0, 1}, {1, -1}, {1, 0}, {1, 1}};
+ int vizinhaca_4[4][2] = {{-1, 0}, {0, 1}, {1, 0}, {0, -1}};
+
+void rotular_objeto(int linhas, int colunas, Pixel imagem[linhas][colunas], int i, int j, int rotulo, int vizinhaca){
 
     Pilha pilha;
     pilha_init(&pilha);
@@ -46,9 +48,15 @@ void rotular_objeto(int linhas, int colunas, Pixel imagem[linhas][colunas], int 
     while(!pilha_vazia(&pilha)){
         Coordenada atual = pilha_pop(&pilha);
 
-        for(int k=0; k < 8; k++){
-            int vi = atual.i + vizinhaca_8[k][0];
-            int vj = atual.j + vizinhaca_8[k][1];
+        for(int k=0; k < vizinhaca; k++){
+            int vi,vj;
+            if(vizinhaca == 4){
+                vi = atual.i + vizinhaca_4[k][0];
+                vj = atual.j + vizinhaca_4[k][1];
+            } else {
+                vi = atual.i + vizinhaca_8[k][0];
+                vj = atual.j + vizinhaca_8[k][1];
+            }
 
             if(vi < 0 || vi >= linhas || vj < 0 || vj >= colunas) continue;
 
@@ -124,7 +132,7 @@ int main(int argc, char *argv[]) {
         for(int b = 1; b < colunas - 1; b ++){
             if(imagem[a][b].valor == 1 && imagem[a][b].rotulo == 0){
                 num_objetos++;
-                rotular_objeto(linhas, colunas, imagem, a, b, num_objetos);
+                rotular_objeto(linhas, colunas, imagem, a, b, num_objetos, 8);
             }
         }
     }
