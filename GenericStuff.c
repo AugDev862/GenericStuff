@@ -25,7 +25,7 @@ typedef struct {
 typedef struct {
     Coordenada min;
     Coordenada max;
-} InfoObjeto;
+} InfoObjeto; //já foi
 
 void pilha_init(Pilha *p, int capacidade_inicial){
     p->topo = 0;
